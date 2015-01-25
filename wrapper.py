@@ -39,15 +39,6 @@ class container(base):
 		self.positive=[]
 		self.negative=[]
 	
-	"""def __call__(self,*args):
-		for arg in args:
-			if isinstance(arg,list):
-				self(arg)
-			else:
-				assert isinstance(arg,base),arg
-				self.children.append(arg)
-		return self"""
-	
 	def __call__(self,*args):
 		for arg in args:
 			if isinstance(arg,list):

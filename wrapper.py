@@ -60,18 +60,6 @@ class container(base):
 					self.positive.append(arg)
 		return self
 	
-	def getBody(self):
-		if len(self.negative)==0:
-			if len(self.positive)==0:
-				return "{}"
-			else:
-				return "union(){{ {} }}".format(expand(self.positive))
-		else:
-			if len(self.positive)==0:
-				raise Exception("only negative elements in body")
-			else:
-				return "difference(){{ union(){{ {} }} {} }}".format(expand(self.positive), expand(self.negative))
-	
 	def writeBody(self,writer):
 		if len(self.negative)==0:
 			if len(self.positive)==0:
@@ -113,9 +101,6 @@ class translate(container):
 		self.y = y
 		self.z = z
 	
-	def toScript(self):
-		return self.modifier+"translate([{},{},{}]) {}".format(self.x,self.y,self.z,self.getBody())
-	
 	def write(self,writer):
 		writer.writeLine(self.modifier+"translate([{},{},{}])".format(self.x,self.y,self.z))
 		self.writeBody(writer)
@@ -127,9 +112,6 @@ class rotate(container):
 		self.y = y
 		self.z = z
 	
-	def toScript(self):
-		return self.modifier+"rotate([{},{},{}]) {} ".format(self.x,self.y,self.z,self.getBody())
-	
 	def write(self,writer):
 		writer.writeLine(self.modifier+"rotate([{},{},{}])".format(self.x,self.y,self.z))
 		self.writeBody(writer)
@@ -138,9 +120,6 @@ class negative(container):
 	def __init__(self):
 		container.__init__(self)
 	
-	def toScript(self):
-		return self.modifier+self.getBody()
-	
 	def write(self,writer):
 		writer.writeLine(self.modifier)
 		self.writeBody(writer)
@@ -148,9 +127,6 @@ class negative(container):
 class group(container):
 	def __init__(self):
 		container.__init__(self)
-	
-	def toScript(self):
-		return self.modifier+self.getBody()
 	
 	def write(self,writer):
 		writer.writeLine(self.modifier)
@@ -162,11 +138,6 @@ class module_call(container):
 		self.module_name = module_name
 		self.args = args
 		self.kwargs = kwargs
-	
-	def toScript(self):
-		param_list=[str(arg) for arg in self.args]+["{}={}".format(key,val) for key, val in self.kwargs]
-		return self.modifier+"{}({}) {}".format(self.module_name, ",".join(param_list), self.getBody())
-	
 	
 	def write(self,writer):
 		writer.writeLine(self.modifier+"{}([{},{},{}])".format(self.module_name,self.x,self.y,self.z))

@@ -55,7 +55,3 @@ class from_to(Template):
 				)
 			)
 		)
-	
-	def toScript(self):
-		return self.modifier+"union(){}".format(self.getBody())
-		#return "translate([{},{},{}]) rotate([0,0,{}]) rotate([0,{},0]) {} ".format(self.x,self.y,self.z,self.phi,self.theta,self.getBody())

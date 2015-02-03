@@ -15,26 +15,26 @@ class Metric():
 	def screwHead(self,isNut,isHex):
 		return cylinder(r=self.ac/2+TOLERANCE,h=(self.nutHeight if isNut else self.headHeight)+EPSILON,fn=6 if isHex else 100)
 	
-	def screw(self, outer_length=None, inner_length=None, head=None, nut=None, overlength=0.0):
+	def screw(self, outer_length=None, inner_length=None, head=None, nut=None, overlength=0.0,rot=0.0):
 		assert not (outer_length is None and inner_length is None), "must supply either outer_length or inner_length"
 		assert outer_length is not None or inner_length is not None, "must supply either outer_length or inner_length"
 		if outer_length is None:
 			outer_length=inner_length+self.headHeight+self.nutHeight
 		
-		g=group()
-		g(cylinder(r=self.diameter/2+TOLERANCE,h=outer_length+overlength,fn=100))
+		g=rotate(0,0,rot)
+		g(translate(0,0,-EPSILON)(cylinder(r=self.diameter/2+TOLERANCE,h=outer_length+overlength+2*EPSILON,fn=100)))
 		if head is not None:
 			g(translate(0,0,-EPSILON)(self.screwHead(False,head=="hex")))
 		if nut is not None:
 			g(translate(0,0,outer_length-self.headHeight)(self.screwHead(False,nut=="hex")))
 		return g
 	
-	def screw_from_to(self, x,y,z, tx,ty,tz, head=None, nut=None):
+	def screw_from_to(self, x,y,z, tx,ty,tz, head=None, nut=None, rot=0.0):
 		length=math.sqrt((tx-x)**2+(ty-y)**2+(tz-z)**2)
 		g=(
 			from_to(x,y,z,tx,ty,tz)
 			(
-				self.screw(outer_length=length, head=head, nut=nut)
+				self.screw(outer_length=length, head=head, nut=nut, rot=rot)
 			)
 		)
 		return g

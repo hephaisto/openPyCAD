@@ -5,6 +5,13 @@ def expand(l):
 class base():
 	def __init__(self):
 		self.modifier=""
+		self.alignmentPoints={}
+	
+	def getAligned(self,name):
+		if name in self.alignmentPoints:
+			return translate(*[-p for p in self.alignmentPoints[name]])(self)
+		else:
+			raise Exception("no alignment point \"{}\" found. Available alignment points: \"{}\"".format(name, "\",\"".join(self.alignmentPoints)))
 
 class obj(base):
 	def __init__(self):

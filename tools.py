@@ -11,10 +11,10 @@ def save(filename,obj):
 			f.write(obj.toScript())
 
 
-def visibleHole(something):
-	result=[negative()(something)]
+def visibleHole(*something):
+	result=[negative()(*something)]
 	if VISIBLE_HOLES:
-		inlay=group()(something)
+		inlay=group()(*something)
 		inlay.modifier="%"
 		result.append(inlay)
 	return result

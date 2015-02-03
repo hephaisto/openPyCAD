@@ -55,3 +55,6 @@ class from_to(Template):
 				)
 			)
 		)
+
+def cylinder_from_to(x,y,z,tx,ty,tz,r,**kwargs):
+	return from_to(x,y,z,tx,ty,tz)(cylinder(r=r,h=math.sqrt((tx-x)**2+(ty-y)**2+(tz-z)**2),**kwargs))

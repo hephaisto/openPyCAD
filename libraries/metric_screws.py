@@ -3,7 +3,8 @@ from openPyCAD.wrapper import *
 from openPyCAD.tools import from_to
 import math
 
-TOLERANCE=0.0
+TOLERANCE=0.42
+INNER_TOLERANCE=1.0
 
 class Metric():
 	def __init__(self,diameter,headHeight,ac,nutHeight):
@@ -28,7 +29,7 @@ class Metric():
 			outer_length=inner_length+self.headHeight+self.nutHeight
 		
 		g=rotate(0,0,rot)
-		g(translate(0,0,-EPSILON)(cylinder(r=self.diameter/2+TOLERANCE,h=outer_length+overlength+2*EPSILON,fn=100)))
+		g(translate(0,0,-EPSILON)(cylinder(r=self.diameter/2+INNER_TOLERANCE,h=outer_length+overlength+2*EPSILON,fn=100)))
 		if head is not None:
 			g(translate(0,0,-EPSILON)(self.screwHead(False,head=="hex")))
 		if nut is not None:

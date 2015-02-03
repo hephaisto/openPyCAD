@@ -41,7 +41,7 @@ class container(base):
 	
 	def __call__(self,*args):
 		for arg in args:
-			if isinstance(arg,list):
+			if isinstance(arg,list) or isinstance(arg,tuple):
 				self(*arg)
 			else:
 				assert isinstance(arg,base)

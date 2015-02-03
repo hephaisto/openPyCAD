@@ -40,6 +40,15 @@ class cylinder(obj):
 	def toScript(self):
 		return self.modifier+"cylinder(r={r},h={h}{additional});".format(r=self.r,h=self.h,additional=",$fn={}".format(self.fn) if self.fn is not None else "")
 
+class sphere(obj):
+	def __init__(self,r,fn=None):
+		obj.__init__(self)
+		self.r = r
+		self.fn = fn
+	
+	def toScript(self):
+		return self.modifier+"sphere(r={r}{additional});".format(r=self.r,additional=",$fn={}".format(self.fn) if self.fn is not None else "")
+
 class container(base):
 	def __init__(self,**kwargs):
 		base.__init__(self,**kwargs)

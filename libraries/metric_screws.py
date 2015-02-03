@@ -7,6 +7,12 @@ TOLERANCE=0.0
 
 class Metric():
 	def __init__(self,diameter,headHeight,ac,nutHeight):
+		"""
+		diameter: hole diameter (nominal diameter, e.g. 4 for M4 screws)
+		headHeight: height of the hole for the head
+		ac: outer diameter (Acc/Corn)
+		nutHeight: height of the hole for the nut
+		"""
 		self.diameter=diameter
 		self.ac=ac
 		self.headHeight=headHeight
@@ -40,7 +46,7 @@ class Metric():
 		return g
 	
 
-
+# values based on http://www.roymech.co.uk/Useful_Tables/Screws/Hex_Screws.htm
 m3 =Metric( 3,  2.125, 06.40,  2.40)
 m4 =Metric( 4,  2.925, 08.10,  3.20)
 m5 =Metric( 5,  3.650, 09.20,  4.00)

@@ -148,3 +148,17 @@ metrics={
 	30:m30,
 	36:m36
 }
+
+if __name__=="__main__":
+	from openPyCAD.writer import Writer
+	writer=Writer()
+	root=group()
+	example_metrics=[3,4,5,6,8]
+	heads=["hex","hexkey","sunk"]
+	root(translate(-10,0,0)(cube(5,5,20)))
+	for i in range(len(example_metrics)):
+		for j in range(len(heads)):
+			nutparams=[{"nut_begin":20},{"nut_end":20},{}][j]
+			root(metrics[example_metrics[i]].screw_from_to(20*i,20*j,0, 20*i,20*j,20, head=heads[j], head_overlength=10*i, nut="hex", **nutparams))
+	root.write(writer)
+	writer.saveTo("metric_screws.scad")

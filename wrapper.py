@@ -31,14 +31,21 @@ class cube(obj):
 		return self.modifier+"cube([{},{},{}]);".format(self.x,self.y,self.z)
 
 class cylinder(obj):
-	def __init__(self,r,h,fn=None):
+	def __init__(self,r,h,fn=None,r2=None):
 		obj.__init__(self)
 		self.r = r
 		self.h = h
 		self.fn = fn
+		self.r2 = r2
 	
 	def toScript(self):
-		return self.modifier+"cylinder(r={r},h={h}{additional});".format(r=self.r,h=self.h,additional=",$fn={}".format(self.fn) if self.fn is not None else "")
+		params={
+			"r" if self.r2 is None else "r1":self.r,
+			"h":self.h
+		}
+		if self.r2 is not None:
+			params["r2"]=self.r2
+		return self.modifier+"cylinder({params}{additional});".format(params=",".join(["{}={}".format(k,v) for k,v in params.iteritems()]),additional=",$fn={}".format(self.fn) if self.fn is not None else "")
 
 class sphere(obj):
 	def __init__(self,r,fn=None):

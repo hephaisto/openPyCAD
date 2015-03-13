@@ -7,12 +7,12 @@ class ProfileDefinition():
 		self.screw_metric = screw_metric
 		self.width = float(width)
 	
-	def make_screws(self, center, length, rotation, **kwargs):
+	def make_screws(self, center, length, rotation, rotation2=0.0, **kwargs):
 		positions=[-self.width/2+0.5*(2*i+1)/self.num_screws*self.width for i in range(self.num_screws)]
-		root=translate(*center)(rotate(0,0,rotation)(
+		root=translate(*center)(rotate(0,0,rotation)(rotate(0,rotation2,0)(
 			[self.screw_metric.screw_from_to(positions[i],0,length, positions[i],0,0, **kwargs)
 			for i in range(self.num_screws)
-			]))
+			])))
 		return root
 
 profile_20			=ProfileDefinition(20, m.m5, 1)

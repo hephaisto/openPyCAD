@@ -1,4 +1,4 @@
-from wrapper import *
+from openPyCAD.wrapper import *
 import math
 VISIBLE_HOLES=True
 

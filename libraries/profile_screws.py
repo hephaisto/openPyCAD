@@ -1,4 +1,4 @@
-from openPyCAD import group,translate,rotate
+from openPyCAD.wrapper import group,translate,rotate
 import openPyCAD.libraries.metric_screws as m
 
 class ProfileDefinition():

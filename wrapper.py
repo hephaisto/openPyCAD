@@ -108,6 +108,17 @@ class container(base):
 				writer.decDepth()
 				writer.writeLine("}")
 
+class mirror(container):
+	def __init__(self,x,y,z):
+		container.__init__(self)
+		self.x = x
+		self.y = y
+		self.z = z
+	
+	def write(self,writer):
+		writer.writeLine(self.modifier+"mirror([{},{},{}])".format(self.x,self.y,self.z))
+		self.writeBody(writer)
+
 class translate(container):
 	def __init__(self,x,y,z):
 		container.__init__(self)
